@@ -8,7 +8,7 @@ import Web.Controller.TodosController
 
 instance FrontController WebApplication where
     controllers =
-        [ startPage TodosAction
+        [ startPage TodosHtmxAction
         , parseRoute @TodosController
         ]
 

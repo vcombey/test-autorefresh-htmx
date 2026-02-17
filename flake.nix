@@ -1,6 +1,6 @@
 {
     inputs = {
-        ihp.url = "path:///Users/vcombey/cava/worktree/auto-refresh-with";
+        ihp.url = "path:///Users/vcombey/cava/worktree/auto-refresh-htmx";
         nixpkgs.follows = "ihp/nixpkgs";
         flake-parts.follows = "ihp/flake-parts";
         devenv.follows = "ihp/devenv";
