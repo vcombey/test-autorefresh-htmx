@@ -1,12 +1,13 @@
 module Web.Controller.TodosController where
 
+import qualified Data.Text as Text
 import IHP.AutoRefresh
 import qualified IHP.ViewSupport as ViewSupport
-import qualified Data.Text as Text
 import qualified Network.HTTP.Types as HTTP
 import qualified Network.Wai as WAI
 import Web.Controller.Prelude
 import Web.View.Todos.Fragments.List
+import Web.View.Todos.Fragments.Stats
 import Web.View.Todos.Htmx
 import Web.View.Todos.Playground
 
@@ -31,6 +32,16 @@ instance Controller TodosController where
                         else todos
                             |> filter (\todo -> normalizedSearch `isInfixOf` (todo.title |> Text.toLower))
             let view = TodoListFragmentView { todos = visibleTodos, searchQuery }
+            let ?view = view
+            respondHtml (ViewSupport.html view)
+
+    action TodoStatsFragmentAction = do
+        autoRefresh do
+            todos <- query @Todo |> fetch
+            let totalCount = length todos
+            let doneCount = todos |> filter (\todo -> todo.isDone) |> length
+            let pendingCount = totalCount - doneCount
+            let view = TodoStatsFragmentView { totalCount, doneCount, pendingCount }
             let ?view = view
             respondHtml (ViewSupport.html view)
 

@@ -644,8 +644,8 @@
         "systems": "systems_7"
       },
       "locked": {
-        "lastModified": 1771449953,
-        "narHash": "sha256-yPg3nSjluf2hl+KtiGDrmnW5m4MxDdXsEiprvvIpcm4=",
+        "lastModified": 1772274732,
+        "narHash": "sha256-M3bEo8kUYJmH89i5sPdo6GjQDzhHu8OGsNynvlMqU7E=",
         "path": "/Users/vcombey/cava/worktree/auto-refresh-htmx",
         "type": "path"
       },

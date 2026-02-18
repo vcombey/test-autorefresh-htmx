@@ -9,6 +9,7 @@ data WebApplication = WebApplication deriving (Eq, Show)
 data TodosController
     = TodosHtmxAction
     | TodosPlaygroundAction
+    | TodoStatsFragmentAction
     | TodoListFragmentAction
     | CreateTodoHtmxAction
     | ToggleTodoHtmxAction { todoId :: !(Id Todo) }
