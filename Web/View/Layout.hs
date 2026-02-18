@@ -15,8 +15,14 @@ defaultLayout inner = [hsx|
     {metaTags} {stylesheets} {scripts}
     <title>{pageTitleOrDefault "Todo Auto Refresh"}</title>
   </head>
-  <body>
-    <div class="container mt-4">
+  <body
+    hx-ext="morphdom-swap"
+    hx-boost="true"
+    hx-target="#page-content"
+    hx-select="#page-content"
+    hx-swap="morphdom"
+  >
+    <div id="page-content" class="container mt-4">
       {renderFlashMessages} {inner}
     </div>
   </body>
@@ -40,9 +46,7 @@ scripts = [hsx|
         <script src={assetPath "/vendor/flatpickr.js"}></script>
         <script src={assetPath "/vendor/htmx.min.js"}></script>
         <script src={assetPath "/vendor/morphdom-umd.min.js"}></script>
-        <script src={assetPath "/vendor/turbolinks.js"}></script>
-        <script src={assetPath "/vendor/turbolinksInstantClick.js"}></script>
-        <script src={assetPath "/vendor/turbolinksMorphdom.js"}></script>
+        <script src={assetPath "/helpers-htmx.js"}></script>
         <script src={assetPath "/ihp-auto-refresh-htmx.js"}></script>
         <script src={assetPath "/app.js"}></script>
     |]

@@ -2,6 +2,22 @@
 
 This is an IHP (Integrated Haskell Platform) project with GitHub Actions for testing and deployment. For more information about IHP, see the [IHP Documentation](https://ihp.digitallyinduced.com/Guide/).
 
+## HTMX Sandbox Checks
+
+This sandbox is configured to test HTMX + Auto Refresh with:
+
+- `/helpers-htmx.js`
+- `/ihp-auto-refresh-htmx.js`
+- layout-level `hx-boost` + morphdom swap into `#page-content`
+
+Open the app and try:
+
+1. Navigation: click `Open Navigation Playground` and `Go To Todos Page` to verify boosted link navigation and URL updates.
+2. Boosted GET form: submit filter forms (`q`) and confirm URL updates (`?q=...`) without full page reload.
+3. Fragment load/reload: use `Reload List Fragment` to fetch just the todo list fragment.
+4. Auto refresh after writes: create a todo, then toggle or delete one. Actions return `204`; list updates via auto refresh.
+5. Helper behavior: click `Back` buttons (`.js-back`) and verify helper behavior from `helpers-htmx.js`.
+
 ## GitHub Actions Workflow
 
 This project includes a GitHub Actions workflow for automated testing and deployment. The workflow is defined in `.github/workflows/test.yml`.

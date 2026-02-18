@@ -8,6 +8,9 @@ data WebApplication = WebApplication deriving (Eq, Show)
 
 data TodosController
     = TodosHtmxAction
+    | TodosPlaygroundAction
     | TodoListFragmentAction
     | CreateTodoHtmxAction
+    | ToggleTodoHtmxAction { todoId :: !(Id Todo) }
+    | DeleteTodoHtmxAction { todoId :: !(Id Todo) }
     deriving (Eq, Show, Data)
