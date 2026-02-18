@@ -26,6 +26,7 @@ instance View HtmxView where
             id="todo-list-fragment"
             hx-get={pathTo TodoListFragmentAction}
             hx-trigger="load"
+            hx-swap="innerHTML"
           ></div>
         </div>
     |]
