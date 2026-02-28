@@ -146,7 +146,14 @@
     }
 
     if (session.socket) {
-      session.socket.close();
+      session.isClosing = true;
+
+      // Closing a socket while CONNECTING causes noisy browser errors
+      // ("WebSocket is closed before the connection is established").
+      // Let it finish opening and close it in onopen instead.
+      if (session.socket.readyState === WebSocket.OPEN) {
+        session.socket.close();
+      }
     }
     delete autoRefreshSessions[key];
   }
@@ -220,15 +227,23 @@
       targetSelector: config.target || null,
       socket: null,
       pendingHtml: null,
+      isClosing: false,
     };
 
     session.socket = new WebSocket(socketHost());
 
     session.socket.onopen = function () {
+      if (session.isClosing || autoRefreshSessions[key] !== session) {
+        session.socket.close();
+        return;
+      }
       session.socket.send(session.sessionId);
     };
 
     session.socket.onmessage = function (event) {
+      if (session.isClosing || autoRefreshSessions[key] !== session) {
+        return;
+      }
       handleIncomingHtml(event.data, session);
     };
 

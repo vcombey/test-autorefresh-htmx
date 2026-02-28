@@ -18,6 +18,28 @@ Open the app and try:
 4. Auto refresh after writes: create a todo, then toggle or delete one. Actions return `204`; list updates via auto refresh.
 5. Helper behavior: click `Back` buttons (`.js-back`) and verify helper behavior from `helpers-htmx.js`.
 
+### helpers-htmx parity lab
+
+Use `/HelpersHtmxSpec` to run a feature-by-feature parity check against the guide mapping.
+
+1. Open `/HelpersHtmxSpec`.
+2. Click `Run helpers-htmx checks`.
+3. Review per-feature pass/fail output in the results list.
+
+The current suite covers:
+
+- `.js-back` and `[data-js-back]`
+- `[data-toggle]`
+- file preview (`data-preview`)
+- date/time formatting (`.time-ago`, `.date-time`, `.date`, `.time`)
+- flatpickr init on load and after HTMX swaps
+- `ihp:load` / `ihp:unload`
+- `.js-scroll-into-view` after swap
+- alert dismissal on request and `hx-disabled-elt`
+- `hx-confirm` request flow
+- morphdom parity checks (node identity, input/checkbox state, HTMX re-processing)
+- timer tracking utilities (`allIntervals`, `allTimeouts`, `clearAll*`)
+
 ## GitHub Actions Workflow
 
 This project includes a GitHub Actions workflow for automated testing and deployment. The workflow is defined in `.github/workflows/test.yml`.

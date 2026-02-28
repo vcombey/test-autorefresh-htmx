@@ -334,8 +334,8 @@
             }
         } else if (tag === 'TEXTAREA') {
             toEl.value = fromEl.value;
-        } else if (tag === 'OPTION') {
-            toEl.selected = fromEl.selected;
+        } else if (tag === 'SELECT') {
+            toEl.value = fromEl.value;
         }
     }
 

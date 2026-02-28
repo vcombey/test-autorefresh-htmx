@@ -18,6 +18,7 @@ instance View PlaygroundView where
             <div class="d-flex gap-2 flex-wrap">
                 <a class="btn btn-primary btn-sm" href={pathTo TodosHtmxAction}>Go To Todos Page</a>
                 <a class="btn btn-outline-primary btn-sm" href={pathTo TodosPlaygroundAction}>Reload This Page</a>
+                <a class="btn btn-outline-primary btn-sm" href={pathTo HelpersHtmxSpecAction}>Open helpers-htmx Lab</a>
                 <button type="button" class="btn btn-outline-secondary btn-sm js-back">Back</button>
             </div>
         </div>

@@ -21,6 +21,9 @@ instance View HtmxView where
             <a class="btn btn-outline-primary btn-sm" href={pathTo TodosPlaygroundAction}
               >Open Navigation Playground</a
             >
+            <a class="btn btn-outline-primary btn-sm" href={pathTo HelpersHtmxSpecAction}
+              >Open helpers-htmx Lab</a
+            >
             <button type="button" class="btn btn-outline-secondary btn-sm js-back">
               Back
             </button>
@@ -90,6 +93,7 @@ instance View HtmxView where
             type="button"
             class="btn btn-outline-dark btn-sm"
             hx-get={pathTo TodoStatsFragmentAction}
+            hx-target="#todo-stats-fragment"
             hx-select="unset"
             hx-swap="innerHTML"
           >
@@ -101,6 +105,7 @@ instance View HtmxView where
             class="btn btn-outline-dark btn-sm"
             hx-get={pathTo TodoListFragmentAction}
             hx-include="#todo-filter-query"
+            hx-target="#todo-list-fragment"
             hx-select="unset"
             hx-swap="innerHTML"
           >
@@ -113,6 +118,7 @@ instance View HtmxView where
           id="todo-stats-fragment"
           hx-get={pathTo TodoStatsFragmentAction}
           hx-trigger="load"
+          hx-sync="#page-content:queue all"
           hx-target="#todo-stats-fragment"
           hx-select="unset"
           hx-swap="innerHTML"
@@ -123,6 +129,7 @@ instance View HtmxView where
           id="todo-list-fragment"
           hx-get={pathTo TodoListFragmentAction}
           hx-trigger="load"
+          hx-sync="#page-content:queue all"
           hx-include="#todo-filter-query"
           hx-target="#todo-list-fragment"
           hx-select="unset"
@@ -138,3 +145,9 @@ instance View HtmxView where
             formOptions formContext =
                 formContext
                     |> set #formAction (pathTo CreateTodoHtmxAction)
+                    |> set #customFormAttributes
+                        [ ("hx-post", pathTo CreateTodoHtmxAction)
+                        , ("hx-swap", "none")
+                        , ("hx-select", "unset")
+                        , ("hx-disabled-elt", "button[type='submit']")
+                        ]
