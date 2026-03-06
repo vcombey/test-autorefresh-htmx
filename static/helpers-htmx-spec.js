@@ -403,6 +403,64 @@
         return 'intervals/timeouts are tracked by helper wrappers';
     }
 
+    async function testBoostedNavigationClearsTimers() {
+        var boostedIntervalTicks = 0;
+        var boostedTimeoutFired = false;
+
+        window.setInterval(function () {
+            boostedIntervalTicks += 1;
+        }, 20);
+        window.setTimeout(function () {
+            boostedTimeoutFired = true;
+        }, 20);
+
+        document.dispatchEvent(
+            new CustomEvent('htmx:beforeSwap', {
+                detail: { boosted: true, shouldSwap: true },
+            })
+        );
+        await delay(80);
+
+        assert(
+            boostedIntervalTicks === 0,
+            'Boosted page swap should clear tracked intervals before they tick'
+        );
+        assert(
+            boostedTimeoutFired === false,
+            'Boosted page swap should clear tracked timeouts before they fire'
+        );
+
+        var fragmentIntervalTicks = 0;
+        var fragmentTimeoutFired = false;
+        var fragmentIntervalId = window.setInterval(function () {
+            fragmentIntervalTicks += 1;
+        }, 20);
+        var fragmentTimeoutId = window.setTimeout(function () {
+            fragmentTimeoutFired = true;
+        }, 20);
+
+        document.dispatchEvent(
+            new CustomEvent('htmx:beforeSwap', {
+                detail: { boosted: false, shouldSwap: true },
+            })
+        );
+        await delay(80);
+
+        window.clearInterval(fragmentIntervalId);
+        window.clearTimeout(fragmentTimeoutId);
+
+        assert(
+            fragmentIntervalTicks > 0,
+            'Non-boosted swap should not clear fragment intervals'
+        );
+        assert(
+            fragmentTimeoutFired === true,
+            'Non-boosted swap should not clear fragment timeouts'
+        );
+
+        return 'boosted swaps clear timers; fragment swaps leave them running';
+    }
+
     var tests = [
         { name: 'js-back and data-js-back', run: testBackHelpers },
         { name: 'data-toggle behavior', run: testToggleHelper },
@@ -416,6 +474,7 @@
         { name: 'hx-confirm on request', run: testConfirmOnRequest },
         { name: 'morphdom parity + htmx.process', run: testMorphdomSwapParity },
         { name: 'timer tracking utilities', run: testTimerTrackingUtilities },
+        { name: 'boosted navigation clears timers', run: testBoostedNavigationClearsTimers },
     ];
 
     var running = false;
